@@ -1,0 +1,40 @@
+
+if (!fs.existsSync('categary')) {
+  fs.mkdirSync('categary');
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'categary/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+
+});
+ 
+const categary = multer({ storage: storage });
+
+app.post('/categary', categary.single('image'), async(req, res, next) => {
+  const file = req.file;
+  if (!file) {
+    const error = new Error('No image provided');
+    error.status = 400;
+    return next(error);
+  }
+  const { text } = req.body;
+  if (!text) {
+    const error = new Error('No text provided');
+    error.status = 400;
+    return next(error);
+  }
+  const categary = new Categary({
+    image: file.originalname,
+    text: text,
+  });
+  await categary.save();
+  res.status(200).send({
+    message: 'Image uploaded successfully',
+    filename: file.originalname
+  });
+});

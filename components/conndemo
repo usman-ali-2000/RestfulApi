@@ -1,0 +1,14 @@
+/*const mongoose = require("mongoose");
+mongoose.set('strictQuery', true);
+const db = mongoose.Connection;
+
+mongoose.connect("mongodb://localhost:27017/usman", {
+    useCreateIndex: true,
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+}).then(()=>{
+    console.log("connection is successful");
+}).catch(()=>{
+    console.log("not connected...")
+})
+console.log(db.readyState);*/
